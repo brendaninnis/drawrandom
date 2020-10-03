@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Create a list{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+<p>This tool allows you to create a list of secret roles, teams or identities and have each person draw one randomly. Create a list separated by newlines. Once you click 'Submit' you will get a link that anyone can visit to be given one of the items in secret.</p>
+<p>You can use this tool when you are playing a game online that requires you to give each player a secret role, identity or objective, or you can separate players into teams (for example in a 6 player game with 2 teams you can add 3 entries of each team.) You can enter a word or a whole sentence on each line, so this tool can be used for any task which requires everyone to secretly be given a random item from a list.</p>
+<form method="post">
+  <textarea name="list">{% for item in listarray %}{{ item }}&#13;{% endfor %}</textarea>
+<input type="submit" value="Submit">
+</form>
+{% endblock %}
