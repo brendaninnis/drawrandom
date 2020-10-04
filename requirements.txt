@@ -1,7 +1,18 @@
+appdirs==1.4.4
+certifi==2020.6.20
 click==7.1.2
--e git+https://github.com/brendaninnis/drawrandom.git@4835a5a7c1566bf8910dc8aca0a3134a517d038a#egg=drawrandom
+distlib==0.3.1
+-e git+https://github.com/brendaninnis/drawrandom.git@82cd1e529c5f507b2ca0b2d3710d3fa010497be5#egg=drawrandom
+filelock==3.0.12
 Flask==1.1.2
+gunicorn==20.0.4
+importlib-metadata==2.0.0
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
+pipenv==2020.8.13
+six==1.15.0
+virtualenv==20.0.32
+virtualenv-clone==0.5.4
 Werkzeug==1.0.1
+zipp==3.3.0
