@@ -1,0 +1,4 @@
+include drawrandom/schema.sql
+graft drawrandom/static
+graft drawrandom/templates
+global-exclude *.pyc
