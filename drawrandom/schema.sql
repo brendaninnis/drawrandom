@@ -9,5 +9,6 @@ CREATE TABLE item (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   list TEXT NOT NULL,
   name TEXT NOT NULL,
+  assignee TEXT,
   FOREIGN KEY (list) REFERENCES list (key)
 );

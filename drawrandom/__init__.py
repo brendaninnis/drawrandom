@@ -1,16 +1,11 @@
 import os
 import random
-import string
 
 from flask import (
-    Flask, render_template, request, flash
+    Flask, render_template, request, flash, url_for
 )
 from drawrandom.db import get_db
-
-
-def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
-
+from drawrandom.util import id_generator
 
 def create_app(test_config=None):
     # create and configure the app
@@ -55,15 +50,18 @@ def create_app(test_config=None):
                 flash(error)
             else:
                 key = id_generator()
-                query = 'INSERT INTO list (key) VALUES ' + key
+                query = "INSERT INTO list (key) VALUES ('" + key + "')"
                 db = get_db()
+                print(query)
                 db.execute(query)
                 query = 'INSERT INTO item (name, list) VALUES '
                 for item in listarray:
-                    query += '(' + item + ',' + key + ')'
+                    query += "('" + item + "','" + key + "'),"
+                query = query[:-1]
+                print(query)
                 db.execute(query)
                 db.commit()
-                return render_template('link.html', key=key)
+                return render_template('link.html', link=url_for('draw.draw', key=key, _external=True))
 
         return render_template('create.html', listarray=listarray)
 
