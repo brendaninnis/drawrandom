@@ -1,0 +1,7 @@
+click==7.1.2
+-e git+https://github.com/brendaninnis/drawrandom.git@4835a5a7c1566bf8910dc8aca0a3134a517d038a#egg=drawrandom
+Flask==1.1.2
+itsdangerous==1.1.0
+Jinja2==2.11.2
+MarkupSafe==1.1.1
+Werkzeug==1.0.1
