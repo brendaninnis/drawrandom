@@ -11,12 +11,12 @@ bp = Blueprint('draw', __name__, url_prefix='/d')
 @bp.route('/<key>')
 def draw(key):
     # Fetch an item from the list with key
-    item = Item.query.filter(Item.list == key).filter(Item.assignee == None).first()
+    item = Item.query.filter(Item.listkey == key).filter(Item.assignee == None).first()
 
     if item is None:
         abort(404, "This list is empty")
 
-    response = make_response(render_template('draw.html', item=item['name']))
+    response = make_response(render_template('draw.html', item=item.name))
 
     # Give this person a name and assing them to the item
     username = request.cookies.get('username')
