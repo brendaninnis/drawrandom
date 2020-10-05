@@ -4,16 +4,14 @@ import random
 from flask import (
     Flask, render_template, request, flash, url_for
 )
-from drawrandom.db import get_db
 from drawrandom.util import id_generator
+from drawrandom.models import db, List, Item
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'drawrandom.sqlite'),
-    )
+    app = Flask(__name__)
+    app.config.from_object(os.environ['APP_SETTINGS'])
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -35,14 +33,12 @@ def create_app(test_config=None):
         if request.method == 'POST':
             error = None
             listinput = request.form['list']
-            print(listinput)
             if not listinput:
                 error = 'Enter some items in the list'
 
             listarray = listinput.replace('\r', '').split('\n')
             listarray = list(filter(('').__ne__, listarray))
             random.shuffle(listarray)
-            print(listarray)
             if len(listarray) < 2 and not error:
                 error = 'Enter more than 1 item in the list'
 
@@ -50,17 +46,22 @@ def create_app(test_config=None):
                 flash(error)
             else:
                 key = id_generator()
-                query = "INSERT INTO list (key) VALUES ('" + key + "')"
-                db = get_db()
-                print(query)
-                db.execute(query)
-                query = 'INSERT INTO item (name, list) VALUES '
+
+                # Give this person a name and assing them to the item
+                username = request.cookies.get('username')
+                if username is None:
+                    response.set_cookie('username', id_generator())
+
+                newlist = List(key=key, creator=username)
+                db.session.add(newlist)
+                db.session.commit()
+
+                newitems = []
                 for item in listarray:
-                    query += "('" + item + "','" + key + "'),"
-                query = query[:-1]
-                print(query)
-                db.execute(query)
-                db.commit()
+                    newitems.append(Item(listkey=key, name=item))
+                db.session.add_all(newitems)
+                db.session.commit()
+
                 return render_template('link.html', link=url_for('draw.draw', key=key, _external=True))
 
         return render_template('create.html', listarray=listarray)
@@ -68,7 +69,6 @@ def create_app(test_config=None):
     from . import draw
     app.register_blueprint(draw.bp)
 
-    from . import db
     db.init_app(app)
 
     return app

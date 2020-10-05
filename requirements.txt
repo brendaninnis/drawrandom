@@ -1,16 +1,26 @@
+alembic==1.4.3
 appdirs==1.4.4
 certifi==2020.6.20
 click==7.1.2
 distlib==0.3.1
+-e git+https://github.com/brendaninnis/drawrandom.git@538fac42d92de9cf9205001310a46c5c616e0950#egg=drawrandom
 filelock==3.0.12
 Flask==1.1.2
+Flask-Migrate==2.5.3
+Flask-Script==2.0.6
+Flask-SQLAlchemy==2.4.4
 gunicorn==20.0.4
 importlib-metadata==2.0.0
 itsdangerous==1.1.0
 Jinja2==2.11.2
+Mako==1.1.3
 MarkupSafe==1.1.1
 pipenv==2020.8.13
+psycopg2-binary==2.8.6
+python-dateutil==2.8.1
+python-editor==1.0.4
 six==1.15.0
+SQLAlchemy==1.3.19
 virtualenv==20.0.32
 virtualenv-clone==0.5.4
 Werkzeug==1.0.1

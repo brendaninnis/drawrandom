@@ -3,7 +3,7 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from drawrandom.db import get_db
+from drawrandom.models import db, Item
 from drawrandom.util import id_generator
 
 bp = Blueprint('draw', __name__, url_prefix='/d')
@@ -11,12 +11,7 @@ bp = Blueprint('draw', __name__, url_prefix='/d')
 @bp.route('/<key>')
 def draw(key):
     # Fetch an item from the list with key
-    db = get_db()
-    item = db.execute(
-        'SELECT id, name, list, assignee '
-        'FROM item WHERE assignee IS NULL AND list = ?',
-        (key,)
-    ).fetchone()
+    item = Item.query.filter(Item.list == key).filter(Item.assignee == None).first()
 
     if item is None:
         abort(404, "This list is empty")
@@ -28,11 +23,7 @@ def draw(key):
     if username is None:
         response.set_cookie('username', id_generator())
 
-    db.execute(
-        'UPDATE item SET assignee = ? '
-        'WHERE id = ?',
-        (username, item['id'])
-    )
-    db.commit()
+    item.assignee = username
+    db.session.commit()
 
     return response
