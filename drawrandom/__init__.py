@@ -46,11 +46,13 @@ def create_app(test_config=None):
                 flash(error)
             else:
                 key = id_generator()
+                response = render_template('link.html', link=url_for('draw.draw', key=key, _external=True))
 
                 # Give this person a name and assing them to the item
                 username = request.cookies.get('username')
                 if username is None:
-                    response.set_cookie('username', id_generator())
+                    username = id_generator()
+                    response.set_cookie('username', username)
 
                 newlist = List(key=key, creator=username)
                 db.session.add(newlist)
@@ -62,9 +64,10 @@ def create_app(test_config=None):
                 db.session.add_all(newitems)
                 db.session.commit()
 
-                return render_template('link.html', link=url_for('draw.draw', key=key, _external=True))
+                return response
 
-        return render_template('create.html', listarray=listarray)
+        response = render_template('create.html', listarray=listarray)
+        return response
 
     from . import draw
     app.register_blueprint(draw.bp)

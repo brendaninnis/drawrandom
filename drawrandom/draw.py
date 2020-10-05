@@ -21,7 +21,8 @@ def draw(key):
     # Give this person a name and assing them to the item
     username = request.cookies.get('username')
     if username is None:
-        response.set_cookie('username', id_generator())
+        username = id_generator()
+        response.set_cookie('username', username)
 
     item.assignee = username
     db.session.commit()
