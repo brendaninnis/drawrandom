@@ -2,7 +2,7 @@ import os
 import random
 
 from flask import (
-    Flask, render_template, request, flash, url_for
+    Flask, render_template, request, flash, url_for, make_response
 )
 from drawrandom.util import id_generator
 from drawrandom.models import db, List, Item
@@ -46,7 +46,7 @@ def create_app(test_config=None):
                 flash(error)
             else:
                 key = id_generator()
-                response = render_template('link.html', link=url_for('draw.draw', key=key, _external=True))
+                response = make_response(render_template('link.html', link=url_for('draw.draw', key=key, _external=True)))
 
                 # Give this person a name and assing them to the item
                 username = request.cookies.get('username')
