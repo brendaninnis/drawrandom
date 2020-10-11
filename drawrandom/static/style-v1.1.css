@@ -3,6 +3,13 @@
     padding-bottom: 32px;
 }
 
+.bd-navbar .navbar-nav-svg {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: text-top;
+}
+
 .alert {
     margin-top: 1rem;
 }
