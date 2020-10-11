@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style-v1.1.css') }}?v=1.1">
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #05496c;">
-  <a class="navbar-brand" href="">Draw Random Secret Things</a>
+    <a class="navbar-brand" href="{{ url_for('index') }}">Draw Random Secret Things</a>
 </nav>
 <div class="container">
 <section class="content">
@@ -29,7 +29,7 @@
     {% block header %}{% endblock %}
   </header>
   {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning" role="alert">{{ message }}</div>
+    <div class="alert alert-warning" role="alert">{{ message }}.</div>
   {% endfor %}
   {% block content %}{% endblock %}
 </section>

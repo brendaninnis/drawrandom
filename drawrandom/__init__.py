@@ -28,8 +28,7 @@ def create_app(test_config=None):
 
     # index page
     @app.route('/', methods=('GET', 'POST'))
-    def hello():
-        listarray = ['Apples', 'Oranges', 'Snakes']
+    def index():
         if request.method == 'POST':
             error = None
             listinput = request.form['list']
@@ -66,8 +65,17 @@ def create_app(test_config=None):
 
                 return response
 
-        response = render_template('create.html', listarray=listarray)
-        return response
+        listarray = ['Apples', 'Oranges', 'Snakes']
+        return render_template('create.html', listarray=listarray)
+
+    # error pages
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('error.html', error=e.description), 404
+
+    @app.errorhandler(500)
+    def server_error(e):
+        return render_template('error.html', error=e.description), 500
 
     from . import draw
     app.register_blueprint(draw.bp)
