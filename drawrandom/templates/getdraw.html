@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <p>Click to draw your secret random item</p>
+  <h3>{% block title %}Draw{% endblock %}</h3>
 {% endblock %}
 
 {% block content %}
+  <p>Click to draw your secret random item.</p>
   <form method="post">
-    <input type="submit" value="Draw">
+    <input class="btn btn-primary" type="submit" value="Draw">
   </form>
 {% endblock %}

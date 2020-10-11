@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h2>{% block title %}List created{% endblock %}</h2>
+  <h3>{% block title %}List created{% endblock %}</h3>
 {% endblock %}
 
 {% block content %}
-    <p>Anyone can now use the link below to get an item from the list.&#10;&#13;Each item will be given out one at a time until they have all been given out.</p>
-    <a href="{{ link }}">{{ link }}</a>
+  <p>Anyone can now use the link below to get an item from the list.<br>Each item will be given out one at a time until they have all been given out.</p>
+  <a href="{{ link }}">{{ link }}</a>
 {% endblock %}

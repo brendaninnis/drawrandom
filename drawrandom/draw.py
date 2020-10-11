@@ -29,5 +29,5 @@ def draw(key):
         db.session.commit()
         return response
     else:
-        return render_template('getdraw.html')
+        return render_template('getdraw.html', key=key)
 
